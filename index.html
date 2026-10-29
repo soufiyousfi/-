@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تمارين المقطع الأول</title>
+<style>
+:root{
+  --bg:#f6f4ee; --card:#ffffff; --ink:#1f2933; --muted:#5f6b76; --line:#d9d4c7;
+  --accent:#1d6f5f; --accent-soft:#e3f1ed; --warn:#9a5b00; --warn-soft:#fff3dc;
+  --bad:#a6342a; --bad-soft:#fbe7e4; --good:#1f7a3a; --good-soft:#e5f4e8; --key:#eef0f2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15191d; --card:#1e242a; --ink:#e8ecef; --muted:#a3adb7; --line:#36404a;
+    --accent:#5cc2a8; --accent-soft:#1d3a33; --warn:#f0b55a; --warn-soft:#3a2f1a;
+    --bad:#f08a7e; --bad-soft:#3d2421; --good:#79d48f; --good-soft:#1f3a26; --key:#2a323a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15191d; --card:#1e242a; --ink:#e8ecef; --muted:#a3adb7; --line:#36404a;
+  --accent:#5cc2a8; --accent-soft:#1d3a33; --warn:#f0b55a; --warn-soft:#3a2f1a;
+  --bad:#f08a7e; --bad-soft:#3d2421; --good:#79d48f; --good-soft:#1f3a26; --key:#2a323a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;font-size:18px;line-height:1.7}
+header{background:var(--accent);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:1.2rem}
+header .score{font-size:.95rem;opacity:.95}
+main{max-width:860px;margin:0 auto;padding:16px}
+.intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:.95rem;color:var(--muted)}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:22px}
+.ex h2{margin:0 0 6px;font-size:1.15rem;color:var(--accent)}
+.ex .pts{font-size:.85rem;color:var(--muted)}
+.ctx{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:10px 0}
+.q{border-top:1px dashed var(--line);padding-top:12px;margin-top:12px}
+.q .qt{font-weight:600}
+.step{margin:10px 0 4px;padding:10px;border-radius:10px;background:var(--bg)}
+.step label{display:block;font-size:.92rem;color:var(--muted);margin-bottom:4px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row input{flex:1 1 220px;min-width:0;font-size:1.1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);direction:ltr;text-align:right}
+.row input:disabled{opacity:.8}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line)}
+.check{background:var(--accent);color:#fff;border-color:var(--accent);padding:7px 16px}
+.check:disabled{opacity:.5;cursor:default}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.keys button{background:var(--key);color:var(--ink);min-width:42px;padding:4px 8px;font-size:1.1rem;direction:ltr}
+.keys button.wide{min-width:64px;font-size:.9rem}
+.msg{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.95rem;display:none}
+.msg.show{display:block}
+.msg.hint{background:var(--warn-soft);color:var(--warn)}
+.msg.bad{background:var(--bad-soft);color:var(--bad)}
+.msg.good{background:var(--good-soft);color:var(--good)}
+.tries{font-size:.85rem;color:var(--muted)}
+.expl{display:none;margin-top:8px;padding:10px 14px;border-right:4px solid var(--accent);background:var(--card);border-radius:6px}
+.expl.show{display:block}
+.expl .calc{direction:ltr;text-align:right;font-family:Consolas,monospace;white-space:pre-wrap}
+.summary{background:var(--card);border:2px solid var(--accent);border-radius:14px;padding:16px;text-align:center}
+.summary .big{font-size:2rem;font-weight:700;color:var(--accent)}
+.reset{background:var(--card);color:var(--ink);padding:7px 16px;margin-top:8px}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+@media (max-width:520px){body{font-size:16px} .keys button{min-width:38px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>المقطع الأول: الأعداد الطبيعية والأعداد العشرية</h1>
+  <div class="score">علامتك: <span id="score">0</span> / 20</div>
+</header>
+<main>
+  <div class="intro">
+    اقرأ السؤال ثم اكتب جوابك واضغط «تحقق». لديك <b>ثلاث محاولات</b> لكل خطوة، وبعد كل خطأ يظهر تلميح.
+    بعد المحاولة الثالثة يظهر الجواب مع الشرح المفصل. استعمل الأزرار لكتابة الرموز الرياضية.
+    العلامة تُحسب خطوة بخطوة: الجواب الصحيح من المحاولة الأولى يأخذ العلامة كاملة، وتنقص العلامة مع كل محاولة،
+    والجواب القريب يُقبل بنصف العلامة.
+  </div>
+  <div id="app"></div>
+  <div class="summary" id="summary">
+    <div>المجموع</div>
+    <div class="big"><span id="score2">0</span> / 20</div>
+    <div id="done" class="tries"></div>
+    <button class="reset" id="reset">إعادة التمارين من البداية</button>
+  </div>
+</main>
+<script>
+/* أنواع الخطوات:
+   expr  : عملية حسابية قيمتها ans (يجب أن تحتوي على رمز عملية)
+   num   : عدد (ans) ، القريب ضمن نسبة tol
+   frac  : كتابة كسرية عشرية a/b قيمتها ans ومقامها 10 أو 100 أو 1000...
+   cmp   : أحد الرموز < > =
+   order : أعداد مرتبة تصاعديا مفصولة بالرمز <
+   range : عدد بين lo و hi (القريب بين nlo و nhi)
+   text  : كلمة من القائمة ans
+*/
+const DATA = [
+ {title:"التمرين الأول", sub:"جمع وطرح وضرب الأعداد الطبيعية",
+  ctx:"باع فلاح من بسكرة يوم السبت 1245 kg من التمر، وباع يوم الأحد 2378 kg.",
+  qs:[
+   {q:"1) ما هي كمية التمر التي باعها الفلاح في اليومين؟",
+    steps:[
+     {label:"اكتب العملية المناسبة", type:"expr", ans:3623, pts:0.5,
+      hints:["نبحث عن الكمية الكلية: هل نجمع أم نطرح؟","اجمع كمية السبت وكمية الأحد: 1245 + ..."],
+      expl:"لإيجاد الكمية الكلية نجمع الكميتين:", calc:"1245 + 2378"},
+     {label:"اكتب النتيجة (بالكيلوغرام)", type:"num", ans:3623, tol:0.01, pts:0.75,
+      hints:["احسب الجمع عموديا وانتبه إلى الاحتفاظ (الباقي) من رتبة إلى أخرى.","5 + 8 = 13 : نكتب 3 ونحتفظ بـ 1 في رتبة العشرات."],
+      expl:"نجمع عموديا رتبة برتبة: الآحاد 5+8=13 (نكتب 3 ونحتفظ بـ 1)، العشرات 4+7+1=12 (نكتب 2 ونحتفظ بـ 1)، المئات 2+3+1=6، الآلاف 1+2=3.",
+      calc:"1245 + 2378 = 3623\nالكمية الكلية: 3623 kg"}
+    ]},
+   {q:"2) بكم يزيد ما باعه يوم الأحد عما باعه يوم السبت؟",
+    steps:[
+     {label:"اكتب العملية المناسبة", type:"expr", ans:1133, pts:0.5,
+      hints:["«بكم يزيد» تعني أننا نبحث عن الفرق.","نطرح العدد الأصغر من العدد الأكبر: 2378 − ..."],
+      expl:"الفرق بين كميتين نحصل عليه بطرح الأصغر من الأكبر:", calc:"2378 − 1245"},
+     {label:"اكتب النتيجة (بالكيلوغرام)", type:"num", ans:1133, tol:0.01, pts:0.75,
+      hints:["اطرح رتبة برتبة بدءا من الآحاد.","8 − 5 = 3 ، 7 − 4 = 3 ..."],
+      expl:"الآحاد 8−5=3، العشرات 7−4=3، المئات 3−2=1، الآلاف 2−1=1. للتحقق: 1245 + 1133 = 2378.",
+      calc:"2378 − 1245 = 1133\nيزيد بـ 1133 kg"}
+    ]},
+   {q:"3) باع الفلاح تمر يوم الأحد بسعر 350 DA للكيلوغرام الواحد. ما هو المبلغ الذي تحصّل عليه يوم الأحد؟",
+    steps:[
+     {label:"اكتب العملية المناسبة", type:"expr", ans:832300, pts:1,
+      hints:["ثمن كيلوغرام واحد معلوم، ونريد ثمن عدة كيلوغرامات: أي عملية؟","نضرب الكمية في ثمن الكيلوغرام الواحد: 2378 × ..."],
+      expl:"ثمن الكمية = الكمية × ثمن الكيلوغرام الواحد:", calc:"2378 × 350"},
+     {label:"اكتب النتيجة (بالدينار)", type:"num", ans:832300, tol:0.01, pts:1.5,
+      hints:["احسب 2378 × 35 ثم أضف صفرا على اليمين.","2378 × 35 = 2378 × 30 + 2378 × 5"],
+      expl:"2378 × 35 = 71340 + 11890 = 83230 ، ثم نضرب في 10 فنضيف صفرا.",
+      calc:"2378 × 350 = 832300\nالمبلغ: 832300 DA"}
+    ]}
+  ]},
+ {title:"التمرين الثاني", sub:"الكتابة العشرية والكسرية، والضرب والقسمة على 10 و 100 و 1000 و 0,1",
+  ctx:"أجب عن كل سؤال. اكتب الفاصلة بالزر «,» .",
+  qs:[
+   {q:"1) اكتب العدد 3,47 على شكل كتابة كسرية عشرية.",
+    steps:[{label:"الكتابة الكسرية (استعمل الزر /)", type:"frac", ans:3.47, pts:1,
+      hints:["في 3,47 رقمان بعد الفاصلة: المقام يكون 100.","البسط هو العدد بدون فاصلة: 347"],
+      expl:"العدد 3,47 فيه رقمان بعد الفاصلة، أي 347 جزءا من مئة.", calc:"3,47 = 347/100"}]},
+   {q:"2) اكتب الكسر 52/10 على شكل كتابة عشرية.",
+    steps:[{label:"الكتابة العشرية", type:"num", ans:5.2, pts:1,
+      hints:["القسمة على 10 تزيح الفاصلة مرتبة واحدة إلى اليسار.","52 = 52,0 ؛ أزح الفاصلة مرتبة واحدة."],
+      expl:"52 عشرا تساوي 5 وحدات و 2 أعشار.", calc:"52/10 = 5,2"}]},
+   {q:"3) احسب: 4,8 × 100",
+    steps:[{label:"النتيجة", type:"num", ans:480, pts:1,
+      hints:["الضرب في 100 يزيح الفاصلة مرتبتين إلى اليمين.","4,8 = 4,80 ثم أزح الفاصلة مرتبتين."],
+      expl:"نزيح الفاصلة مرتبتين إلى اليمين ونكمل بصفر عند الحاجة.", calc:"4,8 × 100 = 480"}]},
+   {q:"4) احسب: 63 ÷ 1000",
+    steps:[{label:"النتيجة", type:"num", ans:0.063, pts:1,
+      hints:["القسمة على 1000 تزيح الفاصلة ثلاث مراتب إلى اليسار.","63 = 0063 ؛ ضع الفاصلة قبل ثلاثة أرقام من اليمين."],
+      expl:"نكتب 63 = 63,0 ونزيح الفاصلة ثلاث مراتب إلى اليسار، ونكمل بالأصفار على اليسار.", calc:"63 ÷ 1000 = 0,063"}]},
+   {q:"5) احسب: 25 × 0,1",
+    steps:[{label:"النتيجة", type:"num", ans:2.5, pts:1,
+      hints:["الضرب في 0,1 هو نفسه القسمة على 10.","أزح الفاصلة مرتبة واحدة إلى اليسار."],
+      expl:"ضرب عدد في 0,1 يعطي نفس نتيجة قسمته على 10.", calc:"25 × 0,1 = 25 ÷ 10 = 2,5"}]}
+  ]},
+ {title:"التمرين الثالث", sub:"مقارنة وترتيب الأعداد العشرية",
+  ctx:"في حصة التربية البدنية بمتوسطة في الجلفة، قفز أمين 3,45 m، وقفز ياسين 3,5 m، وقفزت رانية 3,405 m.",
+  qs:[
+   {q:"1) ضع الرمز المناسب (< أو > أو =) بين العددين: 7,5 … 7,48",
+    steps:[{label:"الرمز", type:"cmp", ans:">", pts:1,
+      hints:["الجزءان الصحيحان متساويان (7)، قارن رقمي الأعشار.","7,5 = 7,50 ؛ قارن 50 جزءا من مئة مع 48 جزءا من مئة."],
+      expl:"الجزءان الصحيحان متساويان. نقارن الأعشار: 5 أكبر من 4، إذن 7,5 أكبر.", calc:"7,5 > 7,48"}]},
+   {q:"2) رتب الأعداد التالية ترتيبا تصاعديا: 2,3 ؛ 2,03 ؛ 2,31 ؛ 2,301",
+    steps:[{label:"اكتب الأعداد من الأصغر إلى الأكبر مفصولة بالرمز <", type:"order", ans:[2.03,2.3,2.301,2.31], pts:1.5,
+      hints:["اكتب كل الأعداد بنفس عدد الأرقام بعد الفاصلة: 2,300 ؛ 2,030 ؛ 2,310 ؛ 2,301","الأصغر هو 2,03 لأن رقم أعشاره 0."],
+      expl:"نكمل بالأصفار: 2,300 ؛ 2,030 ؛ 2,310 ؛ 2,301 ثم نقارن الأجزاء العشرية: 030 < 300 < 301 < 310.",
+      calc:"2,03 < 2,3 < 2,301 < 2,31"}]},
+   {q:"3) من هو صاحب أطول قفزة؟",
+    steps:[{label:"اكتب الاسم", type:"text", ans:["ياسين"], pts:1,
+      hints:["قارن 3,45 و 3,5 و 3,405 بعد كتابتها بثلاثة أرقام بعد الفاصلة.","3,450 ؛ 3,500 ؛ 3,405 : أيها الأكبر؟"],
+      expl:"3,500 > 3,450 > 3,405 ، إذن أطول قفزة هي قفزة ياسين (3,5 m). عدد الأرقام بعد الفاصلة لا يدل على كبر العدد.",
+      calc:"3,5 > 3,45 > 3,405"}]},
+   {q:"4) اكتب عددا عشريا محصورا بين 4,6 و 4,7",
+    steps:[{label:"العدد", type:"range", lo:4.6, hi:4.7, nlo:4.6, nhi:4.7, pts:1.5,
+      hints:["اكتب 4,6 = 4,60 و 4,7 = 4,70 ، ثم فكر في عدد بينهما.","مثلا: 4,61 أو 4,65 ..."],
+      expl:"4,6 = 4,60 و 4,7 = 4,70 ، وكل عدد من 4,61 إلى 4,69 (أو 4,605 ...) محصور بينهما.",
+      calc:"4,6 < 4,65 < 4,7"}]}
+  ]},
+ {title:"التمرين الرابع", sub:"العمليات على الأعداد العشرية ورتبة مقدار نتيجة حساب",
+  ctx:"في سوق سطيف، اشترت سلمى 2,5 kg من الطماطم بسعر 85,40 DA للكيلوغرام، و 1,2 kg من البطاطا بسعر 64,5 DA للكيلوغرام، ودفعت للبائع ورقة 500 DA.",
+  qs:[
+   {q:"1) أعط رتبة مقدار لثمن الطماطم (بدون حساب دقيق).",
+    steps:[{label:"رتبة المقدار (بالدينار)", type:"range", lo:199.99, hi:270.01, nlo:150, nhi:320, pts:1,
+      hints:["عوّض 85,40 بعدد قريب منه وسهل الحساب، مثل 80 أو 90.","2,5 × 80 : ضعف 80 ثم أضف نصف 80."],
+      expl:"85,40 قريب من 80 ، و 2,5 × 80 = 160 + 40 = 200. إذن ثمن الطماطم حوالي 200 DA (كل رتبة مقدار بين 200 و 270 مقبولة).",
+      calc:"2,5 × 85,40 ≈ 2,5 × 80 = 200"}]},
+   {q:"2) احسب الثمن الدقيق للطماطم.",
+    steps:[
+     {label:"اكتب العملية", type:"expr", ans:213.5, pts:0.5,
+      hints:["الثمن = الكمية × سعر الكيلوغرام.","2,5 × 85,40"],
+      expl:"نضرب الكمية في سعر الكيلوغرام:", calc:"2,5 × 85,40"},
+     {label:"اكتب النتيجة (بالدينار)", type:"num", ans:213.5, tol:0.01, pts:0.75,
+      hints:["85,40 = 85,4 . احسب 25 × 854 ثم ضع الفاصلة: في العاملين 2,5 و 85,4 رقمان بعد الفاصلة.","25 × 854 = 21350"],
+      expl:"نكتب 85,40 = 85,4 . نحسب 25 × 854 = 21350 ، وفي العاملين 2,5 و 85,4 رقمان بعد الفاصلة (رقم في كل منهما)، فنضع الفاصلة قبل رقمين: 213,50 . النتيجة قريبة من رتبة المقدار 200، إذن هي معقولة.",
+      calc:"2,5 × 85,40 = 213,50\nثمن الطماطم: 213,5 DA"}
+    ]},
+   {q:"3) احسب ثمن البطاطا.",
+    steps:[
+     {label:"اكتب العملية", type:"expr", ans:77.4, pts:0.5,
+      hints:["الثمن = الكمية × سعر الكيلوغرام.","1,2 × 64,5"],
+      expl:"نضرب الكمية في سعر الكيلوغرام:", calc:"1,2 × 64,5"},
+     {label:"اكتب النتيجة (بالدينار)", type:"num", ans:77.4, tol:0.01, pts:0.75,
+      hints:["احسب 12 × 645 ثم ضع الفاصلة قبل رقمين.","12 × 645 = 7740"],
+      expl:"12 × 645 = 7740 ، وفي العاملين معا رقمان بعد الفاصلة، إذن النتيجة 77,40.",
+      calc:"1,2 × 64,5 = 77,40\nثمن البطاطا: 77,4 DA"}
+    ]},
+   {q:"4) ما هو المبلغ الذي يرده البائع لسلمى؟",
+    steps:[
+     {label:"المبلغ الذي دفعته سلمى ثمنا للمشتريات (بالدينار)", type:"num", ans:290.9, tol:0.01, pts:0.5,
+      hints:["اجمع ثمن الطماطم وثمن البطاطا.","213,5 + 77,4 : ضع الفواصل بعضها تحت بعض."],
+      expl:"نجمع الثمنين مع وضع الفواصل بعضها تحت بعض.", calc:"213,5 + 77,4 = 290,9"},
+     {label:"اكتب عملية حساب المبلغ المردود", type:"expr", ans:209.1, pts:0.5,
+      hints:["المبلغ المردود = المبلغ المدفوع − ثمن المشتريات.","500 − 290,9"],
+      expl:"نطرح ثمن المشتريات من الورقة النقدية:", calc:"500 − 290,9"},
+     {label:"المبلغ المردود (بالدينار)", type:"num", ans:209.1, tol:0.01, pts:0.5,
+      hints:["اكتب 500 = 500,0 ثم اطرح.","500,0 − 290,9 = ..."],
+      expl:"500,0 − 290,9 = 209,1. للتحقق: 290,9 + 209,1 = 500.",
+      calc:"500 − 290,9 = 209,1\nيرد البائع لسلمى 209,1 DA"}
+    ]}
+  ]}
+];
+
+const MULT = [1, 0.75, 0.5];      // علامة المحاولة 1 ، 2 ، 3
+const NEAR = 0.5;                 // الجواب القريب: نصف علامة المحاولة
+const KEYS = ["0","1","2","3","4","5","6","7","8","9",",","+","−","×","÷","=","<",">","/","(",")","≈"];
+
+const fmt = x => (Math.round(x*1000)/1000).toString().replace(".", ",");
+const fmtPts = x => (Math.round(x*100)/100).toString().replace(".", ",");
+
+function norm(s){
+  return s.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+          .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/[٫،]/g, ",").replace(/\s+/g, "")
+          .replace(/DA|دج|دينار|kg|كغ|m|م$/gi, "");
+}
+function toNum(s){
+  s = norm(s).replace(/,/g, ".");
+  if(!/^-?\d+(\.\d+)?$|^-?\.\d+$/.test(s)) return null;
+  return parseFloat(s);
+}
+function evalExpr(s){
+  s = norm(s).replace(/,/g, ".").replace(/×|x|X/g, "*").replace(/÷|:/g, "/").replace(/−|–/g, "-");
+  if(!/^[\d.+\-*/()]+$/.test(s)) return null;
+  if(!/[+\-*/]/.test(s.replace(/^-/, ""))) return {plain:true};
+  try{ const v = Function('"use strict";return (' + s + ')')(); return (typeof v === "number" && isFinite(v)) ? {v} : null; }
+  catch(e){ return null; }
+}
+const close = (a, b) => Math.abs(a - b) < 1e-9;
+const isPow10 = n => { if(n < 10) return false; while(n % 10 === 0) n /= 10; return n === 1; };
+
+/* تُرجع: "ok" أو "near" أو "bad" أو "form" (كتابة غير مفهومة) */
+function grade(st, raw){
+  const s = norm(raw);
+  if(!s) return "form";
+  switch(st.type){
+    case "num": {
+      const v = toNum(s); if(v === null) return "form";
+      if(close(v, st.ans)) return "ok";
+      return Math.abs(v - st.ans) <= st.tol * Math.abs(st.ans) ? "near" : "bad";
+    }
+    case "expr": {
+      const r = evalExpr(s); if(!r) return "form";
+      if(r.plain) return "plain";
+      if(close(r.v, st.ans)) return "ok";
+      return Math.abs(r.v - st.ans) <= 0.01 * Math.abs(st.ans) ? "near" : "bad";
+    }
+    case "frac": {
+      const m = s.match(/^(\d+)\/(\d+)$/); if(!m) return "form";
+      const a = +m[1], b = +m[2]; if(b === 0) return "bad";
+      if(!close(a / b, st.ans)) return "bad";
+      return isPow10(b) ? "ok" : "near";
+    }
+    case "cmp":
+      if(!/^[<>=]$/.test(s)) return "form";
+      return s === st.ans ? "ok" : "bad";
+    case "order": {
+      const parts = s.split("<"); const nums = parts.map(toNum);
+      if(nums.some(v => v === null)) return "form";
+      if(nums.length !== st.ans.length) return "bad";
+      const same = [...nums].sort((a,b)=>a-b).every((v,i)=>close(v, [...st.ans].sort((a,b)=>a-b)[i]));
+      if(!same) return "bad";
+      const good = nums.filter((v,i)=>close(v, st.ans[i])).length;
+      if(good === nums.length) return "ok";
+      return good >= nums.length / 2 ? "near" : "bad";
+    }
+    case "range": {
+      const v = toNum(s); if(v === null) return "form";
+      if(v > st.lo && v < st.hi) return "ok";
+      return (v > st.nlo && v < st.nhi) ? "near" : "bad";
+    }
+    case "text":
+      return st.ans.some(a => s.replace(/[أإآ]/g,"ا") === a.replace(/[أإآ]/g,"ا")) ? "ok" : "bad";
+  }
+  return "bad";
+}
+
+let state = {};   // id -> {tries, done, pts}
+function total(){ return Object.values(state).reduce((t, x) => t + (x.pts || 0), 0); }
+function refresh(){
+  const t = fmtPts(total());
+  document.getElementById("score").textContent = t;
+  document.getElementById("score2").textContent = t;
+  const all = document.querySelectorAll(".step").length;
+  const fin = Object.values(state).filter(x => x.done).length;
+  document.getElementById("done").textContent = "الخطوات المنجزة: " + fin + " من " + all;
+}
+
+function build(){
+  const app = document.getElementById("app"); app.innerHTML = ""; state = {};
+  DATA.forEach((ex, ei) => {
+    const exPts = ex.qs.reduce((t,q)=>t+q.steps.reduce((u,s)=>u+s.pts,0),0);
+    const e = document.createElement("section"); e.className = "ex";
+    e.innerHTML = `<h2>${ex.title}</h2><div class="pts">${ex.sub} (${fmtPts(exPts)} نقاط)</div><div class="ctx">${ex.ctx}</div>`;
+    ex.qs.forEach((q, qi) => {
+      const qd = document.createElement("div"); qd.className = "q";
+      qd.innerHTML = `<div class="qt">${q.q}</div>`;
+      q.steps.forEach((st, si) => {
+        const id = `s${ei}_${qi}_${si}`; state[id] = {tries:0, done:false, pts:0};
+        const d = document.createElement("div"); d.className = "step";
+        d.innerHTML = `<label for="${id}">الخطوة ${si+1}: ${st.label} <span class="tries">(${fmtPts(st.pts)} ن)</span></label>
+          <div class="row"><input id="${id}" autocomplete="off" inputmode="text"><button class="check">تحقق</button>
+          <span class="tries" data-t></span></div>
+          <div class="keys">${KEYS.map(k=>`<button type="button" data-k="${k}">${k}</button>`).join("")}
+            <button type="button" class="wide" data-k="⌫">مسح ⌫</button></div>
+          <div class="msg"></div>
+          <div class="expl"><b>الشرح المفصل:</b> ${st.expl}<div class="calc">${st.calc}</div></div>`;
+        const inp = d.querySelector("input"), btn = d.querySelector(".check"),
+              msg = d.querySelector(".msg"), ex2 = d.querySelector(".expl"), tr = d.querySelector("[data-t]");
+        d.querySelectorAll(".keys button").forEach(b => b.addEventListener("click", () => {
+          if(inp.disabled) return;
+          const k = b.dataset.k, p = inp.selectionStart ?? inp.value.length, q2 = inp.selectionEnd ?? p;
+          if(k === "⌫"){ if(p === q2 && p > 0) inp.value = inp.value.slice(0,p-1) + inp.value.slice(q2), inp.setSelectionRange(p-1,p-1);
+                         else { inp.value = inp.value.slice(0,p) + inp.value.slice(q2); inp.setSelectionRange(p,p); } }
+          else { inp.value = inp.value.slice(0,p) + k + inp.value.slice(q2); inp.setSelectionRange(p+k.length, p+k.length); }
+          inp.focus();
+        }));
+        const say = (cls, html) => { msg.className = "msg show " + cls; msg.innerHTML = html; };
+        const finish = (pts) => {
+          const S = state[id]; S.done = true; S.pts = pts;
+          inp.disabled = true; btn.disabled = true; d.querySelector(".keys").style.display = "none";
+          ex2.classList.add("show"); refresh();
+        };
+        const check = () => {
+          const S = state[id]; if(S.done) return;
+          const r = grade(st, inp.value);
+          if(r === "form"){ say("hint", "لم أفهم كتابة الجواب. " + formHelp(st.type)); return; }
+          if(r === "plain"){ say("hint", "المطلوب في هذه الخطوة هو كتابة <b>العملية</b> (مثلا: عدد + عدد) وليس النتيجة فقط."); return; }
+          S.tries++;
+          const m = MULT[S.tries-1];
+          if(r === "ok"){ say("good", `أحسنت! جواب صحيح. حصلت على ${fmtPts(st.pts*m)} من ${fmtPts(st.pts)}.`); finish(st.pts*m); return; }
+          if(r === "near"){ say("hint", `جوابك قريب من الصحيح ويُقبل بعلامة أقل: ${fmtPts(st.pts*m*NEAR)} من ${fmtPts(st.pts)}. الجواب الدقيق في الشرح أسفله.`); finish(st.pts*m*NEAR); return; }
+          if(S.tries < 3){ tr.textContent = "المحاولات المتبقية: " + (3 - S.tries);
+            say("bad", `جواب غير صحيح. <b>تلميح:</b> ${st.hints[S.tries-1]}`); inp.select(); return; }
+          say("bad", "انتهت المحاولات الثلاث. اقرأ الشرح المفصل جيدا ثم انتقل إلى الخطوة التالية."); tr.textContent = ""; finish(0);
+        };
+        btn.addEventListener("click", check);
+        inp.addEventListener("keydown", ev => { if(ev.key === "Enter") check(); });
+        qd.appendChild(d);
+      });
+      e.appendChild(qd);
+    });
+    app.appendChild(e);
+  });
+  refresh();
+}
+function formHelp(t){
+  return {num:"اكتب عددا فقط، مثل 12,5", expr:"اكتب عملية مثل 12 + 7 أو 2,5 × 4", frac:"اكتب الكسر بالشكل بسط/مقام، مثل 25/100",
+          cmp:"اكتب رمزا واحدا: < أو > أو =", order:"اكتب الأعداد مفصولة بالرمز < ، مثل 1,2 < 1,5 < 2",
+          range:"اكتب عددا واحدا، مثل 3,25", text:"اكتب الاسم"}[t] || "";
+}
+document.getElementById("reset").addEventListener("click", () => { build(); window.scrollTo(0,0); });
+build();
+</script>
+</body>
+</html>
